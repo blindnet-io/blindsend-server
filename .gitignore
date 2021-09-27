@@ -1,0 +1,10 @@
+.DS_Store
+.bloop/
+.bsp/
+.metals/
+.gradle/
+.idea/
+target/
+*.log
+metals.sbt
+application.conf
