@@ -22,7 +22,7 @@ case class Metadata(
 )
 
 trait LinkRepository:
-  def getLinkStatus(id: String): IO[LinkStatus]
+  def getLinkStatus(id: String): IO[Option[LinkStatus]]
 
   def initLink(
       id: String,

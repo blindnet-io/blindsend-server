@@ -174,9 +174,15 @@ object Server:
           for
             status <- linkRepo.getLinkStatus(linkId)
             resp   <-
-              if status.workflow == "r" then
-                Ok(RespStatusRequest(status.stage.toString, status.pk).asJson)
-              else Ok(RespStatusSend().asJson)
+              status match
+                case None                                   =>
+                  NotFound()
+                case Some(status) if status.workflow == "r" =>
+                  Ok(RespStatusRequest(status.stage.toString, status.pk).asJson)
+                case Some(status) if status.workflow == "s" =>
+                  Ok(RespStatusSend().asJson)
+                case _                                      =>
+                  InternalServerError()
           yield resp
 
         case r @ POST -> Root / "finish-upload" =>

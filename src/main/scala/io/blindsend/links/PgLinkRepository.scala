@@ -92,8 +92,8 @@ object PgLinkRepository:
         PgLinkRepository.storeLinkFinCommand
       )
     yield new LinkRepository:
-      def getLinkStatus(id: String): IO[LinkStatus] =
-        statusPQ.unique(id)
+      def getLinkStatus(id: String): IO[Option[LinkStatus]] =
+        statusPQ.option(id)
 
       def initLink(
           id: String,
