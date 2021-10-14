@@ -1,7 +1,11 @@
 package io.blindsend
 
 import java.security.{ MessageDigest, SecureRandom }
-import java.time.{ Instant, LocalDateTime, ZoneId }
+import java.time.format.DateTimeFormatter
+import java.time.{ Instant, LocalDateTime, ZoneId, ZonedDateTime }
+import java.util.concurrent.TimeUnit
+
+import scala.concurrent.duration.FiniteDuration
 
 import cats.effect.*
 import com.google.api.client.util.Base64
@@ -64,11 +68,36 @@ object Server:
 
         case r @ POST -> Root / "store-metadata" =>
           for
-            req <- r.as[ReqStoreMetadata]
+            req        <- r.as[ReqStoreMetadata]
+            customTime <- Clock[IO].realTime.map(curTimeMillis =>
+              ZonedDateTime
+                .of(
+                  Instant
+                    .ofEpochMilli(
+                      (curTimeMillis + FiniteDuration(
+                        168,
+                        TimeUnit.HOURS
+                      )).length
+                    )
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime(),
+                  ZoneId.of("Europe/Brussels")
+                )
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX"))
+            )
             links = req.files.map(f =>
               if f.fullUpload then
-                UploadLink(f.id, fileStorage.getSignedUploadLink(f.id))
-              else UploadLink(f.id, fileStorage.getSignedInitUploadLink(f.id))
+                UploadLink(
+                  f.id,
+                  fileStorage.getSignedUploadLink(f.id, customTime),
+                  customTime
+                )
+              else
+                UploadLink(
+                  f.id,
+                  fileStorage.getSignedInitUploadLink(f.id, customTime),
+                  customTime
+                )
             )
             _    <- linkRepo.storeMetadata(
               req.linkId,
@@ -86,13 +115,38 @@ object Server:
         for
           req <- r.as[ReqSendInitStoreMetadata]
 
-          datetime <- getDatetime
-          linkId   <- randomId(16)
+          datetime   <- getDatetime
+          linkId     <- randomId(16)
+          customTime <- Clock[IO].realTime.map(curTimeMillis =>
+            ZonedDateTime
+              .of(
+                Instant
+                  .ofEpochMilli(
+                    (curTimeMillis + FiniteDuration(
+                      168,
+                      TimeUnit.HOURS
+                    )).length
+                  )
+                  .atZone(ZoneId.systemDefault())
+                  .toLocalDateTime(),
+                ZoneId.of("Europe/Brussels")
+              )
+              .format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX"))
+          )
 
           links = req.files.map(f =>
             if f.fullUpload then
-              UploadLink(f.id, fileStorage.getSignedUploadLink(f.id))
-            else UploadLink(f.id, fileStorage.getSignedInitUploadLink(f.id))
+              UploadLink(
+                f.id,
+                fileStorage.getSignedUploadLink(f.id, customTime),
+                customTime
+              )
+            else
+              UploadLink(
+                f.id,
+                fileStorage.getSignedInitUploadLink(f.id, customTime),
+                customTime
+              )
           )
 
           _    <- linkRepo.initLink(

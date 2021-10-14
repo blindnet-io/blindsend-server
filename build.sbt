@@ -11,7 +11,6 @@ lazy val root = project
     version           := "0.2.0",
     scalaVersion      := "3.0.1",
     semanticdbEnabled := true,
-    semanticdbVersion := scalafixSemanticdb.revision,
     scalacOptions ++= Seq(
       "-language:postfixOps"
     ),

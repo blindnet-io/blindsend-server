@@ -68,9 +68,11 @@ given Decoder[ReqStoreMetadata] =
     "link_id"
   )(ReqStoreMetadata.apply)
 
-case class UploadLink(id: String, link: String)
+case class UploadLink(id: String, link: String, customTime: String)
 given Encoder[UploadLink] =
-  Encoder.forProduct2("id", "link")(r => (r.id, r.link))
+  Encoder.forProduct3("id", "link", "custom_time_header")(r =>
+    (r.id, r.link, r.customTime)
+  )
 
 case class RespStoreMetadata(uploadLinks: List[UploadLink])
 
