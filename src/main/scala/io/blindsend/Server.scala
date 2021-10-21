@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter
 import java.time.{ Instant, LocalDateTime, ZoneId, ZonedDateTime }
 import java.util.concurrent.TimeUnit
 
-import scala.concurrent.duration.FiniteDuration
+import scala.concurrent.duration.{ Duration, FiniteDuration }
 
 import cats.effect.*
 import com.google.api.client.util.Base64
@@ -33,12 +33,12 @@ object Server:
     Base64.encodeBase64URLSafeString(digest.digest().take(len))
   }
 
-  val getDatetime = Clock[IO].realTime.map(curTimeMillis =>
-    Instant
-      .ofEpochMilli(curTimeMillis.length)
-      .atZone(ZoneId.systemDefault())
-      .toLocalDateTime()
-  )
+  def getDatetimeUTC(offset: FiniteDuration = Duration.Zero) =
+    Clock[IO].realTime.map(curTimeMillis =>
+      Instant
+        .ofEpochMilli((curTimeMillis + offset).length)
+        .atZone(ZoneId.of("UTC"))
+    )
 
   def service(
       linkRepo: LinkRepository,
@@ -50,7 +50,7 @@ object Server:
           for
             req <- r.as[ReqGetLink]
 
-            datetime <- getDatetime
+            datetime <- getDatetimeUTC().map(_.toLocalDateTime)
             linkId   <- randomId(16)
 
             _ <- linkRepo.initLink(
@@ -69,22 +69,13 @@ object Server:
         case r @ POST -> Root / "store-metadata" =>
           for
             req        <- r.as[ReqStoreMetadata]
-            customTime <- Clock[IO].realTime.map(curTimeMillis =>
-              ZonedDateTime
-                .of(
-                  Instant
-                    .ofEpochMilli(
-                      (curTimeMillis + FiniteDuration(
-                        168,
-                        TimeUnit.HOURS
-                      )).length
-                    )
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDateTime(),
-                  ZoneId.of("Europe/Brussels")
+            customTime <- getDatetimeUTC(FiniteDuration(168, TimeUnit.HOURS))
+              .map(
+                _.format(
+                  DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX")
                 )
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX"))
-            )
+              )
+
             links = req.files.map(f =>
               if f.fullUpload then
                 UploadLink(
@@ -115,24 +106,14 @@ object Server:
         for
           req <- r.as[ReqSendInitStoreMetadata]
 
-          datetime   <- getDatetime
+          datetime   <- getDatetimeUTC().map(_.toLocalDateTime)
           linkId     <- randomId(16)
-          customTime <- Clock[IO].realTime.map(curTimeMillis =>
-            ZonedDateTime
-              .of(
-                Instant
-                  .ofEpochMilli(
-                    (curTimeMillis + FiniteDuration(
-                      168,
-                      TimeUnit.HOURS
-                    )).length
-                  )
-                  .atZone(ZoneId.systemDefault())
-                  .toLocalDateTime(),
-                ZoneId.of("Europe/Brussels")
+          customTime <- getDatetimeUTC(FiniteDuration(168, TimeUnit.HOURS))
+            .map(
+              _.format(
+                DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX")
               )
-              .format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX"))
-          )
+            )
 
           links = req.files.map(f =>
             if f.fullUpload then
