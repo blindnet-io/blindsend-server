@@ -101,10 +101,10 @@ object Server:
           yield resp
       }
 
-    val sendRoutes =
+    val shareRoutes =
       HttpRoutes.of[IO] { case r @ POST -> Root / "init-store-metadata" =>
         for
-          req <- r.as[ReqSendInitStoreMetadata]
+          req <- r.as[ReqShareInitStoreMetadata]
 
           datetime   <- getDatetimeUTC().map(_.toLocalDateTime)
           linkId     <- randomId(16)
@@ -145,7 +145,7 @@ object Server:
             req.files.map(_.id),
             req.seedHash
           )
-          resp <- Ok(RespSendInitStoreMetadata(linkId, links).asJson)
+          resp <- Ok(RespShareInitStoreMetadata(linkId, links).asJson)
         yield resp
       }
 
@@ -161,7 +161,7 @@ object Server:
                 case Some(status) if status.workflow == "r" =>
                   Ok(RespStatusRequest(status.stage.toString, status.pk).asJson)
                 case Some(status) if status.workflow == "s" =>
-                  Ok(RespStatusSend().asJson)
+                  Ok(RespStatusShare().asJson)
                 case _                                      =>
                   InternalServerError()
           yield resp
@@ -210,7 +210,7 @@ object Server:
 
     Router(
       "/request" -> requestRoutes,
-      "/send"    -> sendRoutes,
+      "/share"   -> shareRoutes,
       "/"        -> commonRoutes
     )
   end service

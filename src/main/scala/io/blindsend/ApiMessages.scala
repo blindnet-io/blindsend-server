@@ -14,12 +14,12 @@ given Encoder[Constraints] =
     (r.numOfFiles, r.totalSize, r.singleSize)
   )
 
-case class RespStatusSend()
+case class RespStatusShare()
 case class RespStatusRequest(stage: String, pk: String)
 
-given Encoder[RespStatusSend] =
-  new Encoder[RespStatusSend]:
-    def apply(a: RespStatusSend): Json =
+given Encoder[RespStatusShare] =
+  new Encoder[RespStatusShare]:
+    def apply(a: RespStatusShare): Json =
       Json.obj(("workflow", Json.fromString("s")))
 
 given Encoder[RespStatusRequest] =
@@ -157,7 +157,7 @@ case class RespGetAllSignedDownloadLinks(links: List[SignedLinkId])
 given Encoder[RespGetAllSignedDownloadLinks] =
   Encoder.forProduct1("links")(r => r.links)
 
-case class ReqSendInitStoreMetadata(
+case class ReqShareInitStoreMetadata(
     salt: String,
     passwordless: Boolean,
     seedHash: String,
@@ -165,21 +165,21 @@ case class ReqSendInitStoreMetadata(
     files: List[FileEncData]
 )
 
-given Decoder[ReqSendInitStoreMetadata] =
+given Decoder[ReqShareInitStoreMetadata] =
   Decoder.forProduct5(
     "salt",
     "passwordless",
     "seed_hash",
     "encrypted_metadata",
     "files"
-  )(ReqSendInitStoreMetadata.apply)
+  )(ReqShareInitStoreMetadata.apply)
 
-case class RespSendInitStoreMetadata(
+case class RespShareInitStoreMetadata(
     linkId: String,
     uploadLinks: List[UploadLink]
 )
 
-given Encoder[RespSendInitStoreMetadata] =
+given Encoder[RespShareInitStoreMetadata] =
   Encoder.forProduct2("link_id", "upload_links")(r => (r.linkId, r.uploadLinks))
 
 given EntityDecoder[IO, ReqGetLink] = jsonOf[IO, ReqGetLink]
@@ -194,5 +194,5 @@ given EntityDecoder[IO, ReqFinishUploadLink] = jsonOf[IO, ReqFinishUploadLink]
 given EntityDecoder[IO, ReqGetAllSignedDownloadLinks] =
   jsonOf[IO, ReqGetAllSignedDownloadLinks]
 
-given EntityDecoder[IO, ReqSendInitStoreMetadata] =
-  jsonOf[IO, ReqSendInitStoreMetadata]
+given EntityDecoder[IO, ReqShareInitStoreMetadata] =
+  jsonOf[IO, ReqShareInitStoreMetadata]
