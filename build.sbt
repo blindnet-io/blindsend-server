@@ -8,7 +8,7 @@ lazy val root = project
   .settings(
     name              := "blindsend",
     organization      := "blindnet",
-    version           := "0.2.0",
+    version           := "1.0.0",
     scalaVersion      := "3.1.0",
     semanticdbEnabled := true,
     scalacOptions ++= Seq(
