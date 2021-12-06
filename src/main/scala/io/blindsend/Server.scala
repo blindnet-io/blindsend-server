@@ -8,6 +8,8 @@ import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.{ Duration, FiniteDuration }
 
 import cats.effect.*
+import cats.implicits.*
+import org.http4s.implicits.*
 import com.google.api.client.util.Base64
 import io.blindsend.links.LinkRepository
 import io.blindsend.storage.FileStorage
@@ -208,10 +210,15 @@ object Server:
           yield resp
       }
 
+    val healthCheckRoute =
+      HttpRoutes.of[IO] { case GET -> Root / "health" =>
+        Ok("Service is up")
+      }
+
     Router(
       "/request" -> requestRoutes,
       "/share"   -> shareRoutes,
-      "/"        -> commonRoutes
+      "/"        -> commonRoutes.combineK(healthCheckRoute)
     )
   end service
 

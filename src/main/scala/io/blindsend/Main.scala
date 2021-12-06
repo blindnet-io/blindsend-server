@@ -29,7 +29,7 @@ object Main extends IOApp:
       config <- Resource.eval(
         IO.fromEither(
           ConfigSource
-            .file("application.conf")
+            .file("secrets/application.conf")
             .load[Config](Config.confReader)
             .leftMap(e =>
               new Throwable(s"Error reading config: ${e.prettyPrint()}")
