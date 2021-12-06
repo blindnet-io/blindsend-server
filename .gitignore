@@ -7,4 +7,6 @@
 target/
 *.log
 metals.sbt
+secrets/
 application.conf
+account.json
