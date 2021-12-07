@@ -132,7 +132,7 @@ To build an executable file:
     export GOOGLE_APPLICATION_CREDENTIALS="/account.json"
     ```
 
-To run the server, make sure the **application.json** file is in the same folder as **blindsend.jar** and run:
+To run the server, make sure the **application.json** configuration file is in the **secrets** directory (**secrets** and **blindsend.jar** are in the same directory) and run:
 ```sh
 java -jar ./blindsend.jar
 ```
