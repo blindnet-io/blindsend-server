@@ -5,6 +5,7 @@ Global / excludeLintKeys += SettingKey("scalafixDependencies")
 
 lazy val root = project
   .in(file("."))
+  .enablePlugins(BuildInfoPlugin)
   .settings(
     name              := "blindsend",
     organization      := "blindnet",

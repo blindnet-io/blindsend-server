@@ -44,11 +44,17 @@ object Main extends IOApp:
         config.storage.bucket
       )
 
+      apiVersion =
+        buildinfo.BuildInfo.version
+          .split("\\.")
+          .take(2)
+          .mkString(".")
+
       server <- BlazeServerBuilder[IO](ExecutionContext.global)
         .bindHttp(9000, "0.0.0.0")
         .withHttpApp(
           Router(
-            "api" -> CORS(Server.service(pgLinkRepo, fileStorage))
+            s"v$apiVersion" -> CORS(Server.service(pgLinkRepo, fileStorage))
           ).orNotFound
         )
         .withResponseHeaderTimeout(2 minutes)
