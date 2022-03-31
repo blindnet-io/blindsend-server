@@ -20,8 +20,6 @@ import org.http4s.*
 import org.http4s.circe.*
 import org.http4s.dsl.io.*
 import org.http4s.server.Router
-import skunk.implicits.*
-import skunk.~
 
 object Server:
 
