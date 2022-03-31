@@ -10,7 +10,7 @@ blindsend server is built using [Scala 3](https://scala-lang.org/) and various [
 - [cats-effect](https://typelevel.org/cats-effect/) for flow control
 - [http4s](https://http4s.org/) for http server
 - [circe](https://circe.github.io/circe/) for JSON
-- [skunk](https://tpolecat.github.io/skunk/) for database connection
+- [doobie](https://tpolecat.github.io/doobie/) for database connection
 
 Other libraries include:
 - [logback-classic](https://logback.qos.ch/) and janino for logging
@@ -19,7 +19,7 @@ Other libraries include:
 
 ### Database
 
-Link information is stored in the [PostgreSQL](https://www.postgresql.org/) database. The server connects to it using the [skunk](https://tpolecat.github.io/skunk/) library.
+Link information is stored in the [PostgreSQL](https://www.postgresql.org/) database. The server connects to it using the [doobie](https://tpolecat.github.io/doobie/) library and [HikariCP](https://github.com/brettwooldridge/HikariCP).
 
 Database consist of a single table defined as:
 

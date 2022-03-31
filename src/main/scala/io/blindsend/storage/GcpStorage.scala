@@ -22,7 +22,6 @@ import io.circe.syntax.*
 import org.http4s.*
 import org.http4s.circe.*
 import org.http4s.dsl.io.*
-import skunk.~
 
 object GcpStorage:
 

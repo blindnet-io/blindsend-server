@@ -16,7 +16,7 @@ import org.http4s.implicits.*
 import org.http4s.server.Router
 import org.http4s.server.middleware.CORS
 import pureconfig.*
-import skunk.Session
+import doobie.Transactor
 
 object Main extends IOApp:
   val logger: org.log4s.Logger = org.log4s.getLogger
@@ -37,8 +37,7 @@ object Main extends IOApp:
         )
       )
 
-      session    <- PgLinkRepository.pgSession(config.db)
-      pgLinkRepo <- PgLinkRepository.init(session)
+      pgLinkRepo <- PgLinkRepository.init(config.db)
       fileStorage = GcpStorage.init(
         config.storage.project,
         config.storage.bucket

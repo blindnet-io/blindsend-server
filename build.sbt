@@ -1,5 +1,6 @@
 val CirceVersion  = "0.14.1"
 val http4sVersion = "1.0.0-M23"
+val doobieVersion = "1.0.0-RC1"
 
 Global / excludeLintKeys += SettingKey("scalafixDependencies")
 
@@ -31,7 +32,9 @@ lazy val root = project
       "org.http4s"            %% "http4s-blaze-server"  % http4sVersion,
       "org.http4s"            %% "http4s-blaze-client"  % http4sVersion,
       "com.github.pureconfig" %% "pureconfig-core"      % "0.16.0",
-      "org.tpolecat"          %% "skunk-core"           % "0.2.2",
+      "org.tpolecat"          %% "doobie-core"          % doobieVersion,
+      "org.tpolecat"          %% "doobie-postgres"      % doobieVersion,
+      "org.tpolecat"          %% "doobie-hikari"        % doobieVersion,
       "org.bouncycastle"       % "bcprov-jdk15to18"     % "1.66",
       "ch.qos.logback"         % "logback-classic"      % "1.2.3",
       "org.codehaus.janino"    % "janino"               % "2.6.1",

@@ -3,7 +3,6 @@ package io.blindsend.links
 import java.time.LocalDateTime
 
 import cats.effect.IO
-import skunk.~
 
 case class LinkStatus(
     workflow: String,
