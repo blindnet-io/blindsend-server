@@ -37,7 +37,7 @@ lazy val root = project
       "org.tpolecat"          %% "doobie-hikari"        % doobieVersion,
       "org.bouncycastle"       % "bcprov-jdk15to18"     % "1.66",
       "ch.qos.logback"         % "logback-classic"      % "1.2.3",
-      "org.codehaus.janino"    % "janino"               % "2.6.1",
+      "org.codehaus.janino"    % "janino"               % "2.7.8",
       "com.google.cloud"       % "google-cloud-storage" % "2.1.0"
     ),
     assembly / mainClass             := Some("io.blindsend.Main"),
