@@ -190,8 +190,7 @@ object Server:
           yield resp
 
         case GET -> Root / "signed-download-link" / fileId =>
-          for
-            resp <- Ok(
+          for resp <- Ok(
               RespGetSignedDownloadLink(
                 fileStorage.getSignedDownloadLink(fileId)
               ).asJson
