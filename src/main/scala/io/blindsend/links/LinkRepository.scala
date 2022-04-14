@@ -50,6 +50,6 @@ trait LinkRepository:
 
   def storeLinkFinishedUploading(linkId: String): IO[Unit]
 
-  def getMetadata(linkId: String): IO[Metadata]
+  def getMetadata(linkId: String): IO[Option[Metadata]]
 
 end LinkRepository
