@@ -1,6 +1,6 @@
 val CirceVersion  = "0.14.1"
 val http4sVersion = "1.0.0-M23"
-val doobieVersion = "1.0.0-RC1"
+val doobieVersion = "1.0.0-RC2"
 
 Global / excludeLintKeys += SettingKey("scalafixDependencies")
 
@@ -22,7 +22,7 @@ lazy val root = project
       "JCenter" at "https://jcenter.bintray.com/"
     ),
     libraryDependencies ++= Seq(
-      "org.typelevel"         %% "cats-effect"          % "3.2.9",
+      "org.typelevel"         %% "cats-effect"          % "3.3.11",
       "io.circe"              %% "circe-core"           % CirceVersion,
       "io.circe"              %% "circe-parser"         % CirceVersion,
       "io.circe"              %% "circe-generic"        % CirceVersion,
