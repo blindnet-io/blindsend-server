@@ -11,7 +11,7 @@ lazy val root = project
     name              := "blindsend",
     organization      := "blindnet",
     version           := "1.0.0",
-    scalaVersion      := "3.1.2",
+    scalaVersion      := "3.1.0",
     semanticdbEnabled := true,
     scalacOptions ++= Seq(
       "-language:postfixOps"
