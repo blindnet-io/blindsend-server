@@ -176,17 +176,22 @@ object Server:
         case GET -> Root / "metadata" / linkId =>
           for
             m    <- linkRepo.getMetadata(linkId)
-            resp <- Ok(
-              RespGetMetadata(
-                m.encryptedMetadata,
-                m.seedHash,
-                m.senderPk,
-                m.passwordless,
-                m.salt,
-                m.wrappedRequesterSk,
-                m.nFiles
-              ).asJson
-            )
+            resp <-
+              m match
+                case None    =>
+                  NotFound()
+                case Some(m) =>
+                  Ok(
+                    RespGetMetadata(
+                      m.encryptedMetadata,
+                      m.seedHash,
+                      m.senderPk,
+                      m.passwordless,
+                      m.salt,
+                      m.wrappedRequesterSk,
+                      m.nFiles
+                    ).asJson
+                  )
           yield resp
 
         case GET -> Root / "signed-download-link" / fileId =>

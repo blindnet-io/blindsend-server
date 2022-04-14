@@ -88,12 +88,12 @@ object PgLinkRepository:
         WHERE id = $linkId
       """.update.run.transact(xa).void
 
-      def getMetadata(linkId: String): IO[Metadata] =
+      def getMetadata(linkId: String): IO[Option[Metadata]] =
         sql"""
           SELECT enc_metadata, seed_hash, sender_pk, passwordless, salt, wrapped_requester_sk, num_files
           FROM links
           WHERE id = $linkId
-        """.query[Metadata].unique.transact(xa)
+        """.query[Metadata].option.transact(xa)
 
     }
 

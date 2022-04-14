@@ -1,6 +1,6 @@
 val CirceVersion  = "0.14.1"
-val http4sVersion = "1.0.0-M23"
-val doobieVersion = "1.0.0-RC1"
+val http4sVersion = "1.0.0-M32"
+val doobieVersion = "1.0.0-RC2"
 
 Global / excludeLintKeys += SettingKey("scalafixDependencies")
 
@@ -10,7 +10,7 @@ lazy val root = project
   .settings(
     name              := "blindsend",
     organization      := "blindnet",
-    version           := "1.0.0",
+    version           := "1.0.1",
     scalaVersion      := "3.1.0",
     semanticdbEnabled := true,
     scalacOptions ++= Seq(
@@ -22,7 +22,7 @@ lazy val root = project
       "JCenter" at "https://jcenter.bintray.com/"
     ),
     libraryDependencies ++= Seq(
-      "org.typelevel"         %% "cats-effect"          % "3.2.1",
+      "org.typelevel"         %% "cats-effect"          % "3.3.11",
       "io.circe"              %% "circe-core"           % CirceVersion,
       "io.circe"              %% "circe-parser"         % CirceVersion,
       "io.circe"              %% "circe-generic"        % CirceVersion,
@@ -36,7 +36,7 @@ lazy val root = project
       "org.tpolecat"          %% "doobie-postgres"      % doobieVersion,
       "org.tpolecat"          %% "doobie-hikari"        % doobieVersion,
       "org.bouncycastle"       % "bcprov-jdk15to18"     % "1.66",
-      "ch.qos.logback"         % "logback-classic"      % "1.2.3",
+      "ch.qos.logback"         % "logback-classic"      % "1.2.11",
       "org.codehaus.janino"    % "janino"               % "2.6.1",
       "com.google.cloud"       % "google-cloud-storage" % "2.1.0"
     ),
