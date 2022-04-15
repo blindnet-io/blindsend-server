@@ -1,5 +1,5 @@
 val CirceVersion  = "0.14.1"
-val http4sVersion = "1.0.0-M23"
+val http4sVersion = "1.0.0-M32"
 val doobieVersion = "1.0.0-RC2"
 
 Global / excludeLintKeys += SettingKey("scalafixDependencies")
@@ -10,7 +10,7 @@ lazy val root = project
   .settings(
     name              := "blindsend",
     organization      := "blindnet",
-    version           := "1.0.0",
+    version           := "1.0.1",
     scalaVersion      := "3.1.0",
     semanticdbEnabled := true,
     scalacOptions ++= Seq(

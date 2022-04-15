@@ -49,11 +49,13 @@ object Main extends IOApp:
           .take(2)
           .mkString(".")
 
-      server <- BlazeServerBuilder[IO](ExecutionContext.global)
+      cors = CORS.policy.withAllowOriginAll.withAllowCredentials(false)
+
+      server <- BlazeServerBuilder[IO]
         .bindHttp(9000, "0.0.0.0")
         .withHttpApp(
           Router(
-            s"v$apiVersion" -> CORS(Server.service(pgLinkRepo, fileStorage))
+            s"v$apiVersion" -> cors(Server.service(pgLinkRepo, fileStorage))
           ).orNotFound
         )
         .withResponseHeaderTimeout(2 minutes)
