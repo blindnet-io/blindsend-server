@@ -22,7 +22,7 @@ lazy val root = project
       "JCenter" at "https://jcenter.bintray.com/"
     ),
     libraryDependencies ++= Seq(
-      "org.typelevel"         %% "cats-effect"          % "3.3.11",
+      "org.typelevel"         %% "cats-effect"          % "3.3.12",
       "io.circe"              %% "circe-core"           % CirceVersion,
       "io.circe"              %% "circe-parser"         % CirceVersion,
       "io.circe"              %% "circe-generic"        % CirceVersion,
