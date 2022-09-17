@@ -1,4 +1,4 @@
-val CirceVersion  = "0.14.2"
+val CirceVersion  = "0.14.3"
 val http4sVersion = "1.0.0-M32"
 val doobieVersion = "1.0.0-RC2"
 
