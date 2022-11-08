@@ -1,5 +1,5 @@
 val CirceVersion  = "0.14.2"
-val http4sVersion = "1.0.0-M32"
+val http4sVersion = "1.0.0-M37"
 val doobieVersion = "1.0.0-RC2"
 
 Global / excludeLintKeys += SettingKey("scalafixDependencies")
@@ -35,7 +35,7 @@ lazy val root = project
       "org.tpolecat"          %% "doobie-core"          % doobieVersion,
       "org.tpolecat"          %% "doobie-postgres"      % doobieVersion,
       "org.tpolecat"          %% "doobie-hikari"        % doobieVersion,
-      "org.bouncycastle"       % "bcprov-jdk15to18"     % "1.71",
+      "org.bouncycastle"       % "bcprov-jdk15to18"     % "1.72",
       "ch.qos.logback"         % "logback-classic"      % "1.4.1",
       "org.codehaus.janino"    % "janino"               % "2.6.1",
       "com.google.cloud"       % "google-cloud-storage" % "2.1.0"
