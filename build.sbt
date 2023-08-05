@@ -36,7 +36,7 @@ lazy val root = project
       "org.tpolecat"          %% "doobie-postgres"      % doobieVersion,
       "org.tpolecat"          %% "doobie-hikari"        % doobieVersion,
       "org.bouncycastle"       % "bcprov-jdk15to18"     % "1.72",
-      "ch.qos.logback"         % "logback-classic"      % "1.4.1",
+      "ch.qos.logback"         % "logback-classic"      % "1.4.9",
       "org.codehaus.janino"    % "janino"               % "2.6.1",
       "com.google.cloud"       % "google-cloud-storage" % "2.1.0"
     ),
