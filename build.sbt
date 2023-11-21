@@ -1,6 +1,6 @@
 val CirceVersion  = "0.14.2"
 val http4sVersion = "1.0.0-M38"
-val doobieVersion = "1.0.0-RC2"
+val doobieVersion = "1.0.0-RC5"
 
 Global / excludeLintKeys += SettingKey("scalafixDependencies")
 
