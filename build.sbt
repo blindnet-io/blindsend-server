@@ -31,7 +31,7 @@ lazy val root = project
       "org.http4s"            %% "http4s-circe"         % http4sVersion,
       "org.http4s"            %% "http4s-blaze-server"  % http4sVersion,
       "org.http4s"            %% "http4s-blaze-client"  % http4sVersion,
-      "com.github.pureconfig" %% "pureconfig-core"      % "0.17.2",
+      "com.github.pureconfig" %% "pureconfig-core"      % "0.17.5",
       "org.tpolecat"          %% "doobie-core"          % doobieVersion,
       "org.tpolecat"          %% "doobie-postgres"      % doobieVersion,
       "org.tpolecat"          %% "doobie-hikari"        % doobieVersion,
