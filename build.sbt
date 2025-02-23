@@ -40,7 +40,7 @@ lazy val root = project
       "org.codehaus.janino"    % "janino"               % "2.6.1",
       "com.google.cloud"       % "google-cloud-storage" % "2.1.0"
     ),
-    assembly / mainClass             := Some("io.blindsend.Main"),
+    assembly / mainClass := Some("io.blindsend.Main"),
     assembly / assemblyJarName       := "blindsend.jar",
     // format: off
     assembly / assemblyMergeStrategy := {
